@@ -1,0 +1,69 @@
+kurs = 3.7
+kapital = 7000.0
+zisk = kapital * 0.001
+celk_provoz_ztrata = 0
+
+## Poradi zapasu ve skupine
+## Skupina
+## Vynalozene prostredky    
+## Poradi zapasu od posledni remizy
+team = [0, "A", 0, 1]
+
+print team
+print
+
+def count_bet(team):
+    bet = 1
+    provoz_ztrata = 0
+
+## Pocitadlo zapasu
+    team[0] = team[0] + 1
+    team[3] = team[3] + 1
+    
+    print team[1],team[0]
+    
+    ## Pocitadlo vyse sazky    
+    while bet * kurs <= (zisk * team[0]) + bet + team[2]:
+        bet = bet + 1
+
+## Prirazeni jiz vsazenych prostredku    
+    team[2] = team[2] + bet
+    print "Jiz vsazeno ", team[2]
+    print "Cisty zisk: ", (bet * kurs) - (team[2])
+    print
+    
+## Skupiny, prevod ztraty - 
+    if team[0] == 4 and team[1] == "A":
+        team[2] = team[2] + (team[0] * zisk)
+        team[0] = 0
+        team[1] = "B"
+        global celk_provoz_ztrata
+        celk_provoz_ztrata = celk_provoz_ztrata + team[2]
+        print "Celkova provoz. ztrata tymu: ",celk_provoz_ztrata
+        print
+        print
+        team[2] = 0
+    elif team[0] == 6:
+        team[2] = team[2] + (team[0] * zisk)
+        team[0] = 0
+        team[1] = "C"
+        global celk_provoz_ztrata
+        celk_provoz_ztrata = celk_provoz_ztrata + team[2]
+        print "Celkova provoz. ztrata tymu: ",celk_provoz_ztrata
+        print
+        print
+        team[2] = 0
+        
+        
+    print "Vyse sazky: ", bet
+    print "Vyse vyhry: ", bet * kurs
+    print "------------------------"
+ ##   print "Provozni ztrata: ", provoz_ztrata
+    
+    print
+
+rep = 16
+count = 1
+while rep >= 1:
+    count_bet(team)
+    rep = rep -1
